@@ -18,9 +18,9 @@ for (var i = 0; i < 50; i++) {
   balls.push({
     x: rand.int(canvas.width),
     y: rand.int(canvas.height / 2),
-    radius: rand.range(15, 35),
+    radius: rand.range(5, 15),
     dx: rand.range(-100, 100),
-    dy: 0,
+    dy: -10,
     color: rand.pick(colors)
   });
 }

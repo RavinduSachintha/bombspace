@@ -4,24 +4,30 @@ var rng = require('./rng');
 var canvas = document.querySelector('#game');
 var ctx = canvas.getContext('2d');
 
-var seed = 1;
+var unitCount = 20;
+var cvUnitSizeH = canvas.width / unitCount;
+var cvUnitSizeV = canvas.height / unitCount;
+
+var seed = Math.ceil(Math.random() * 100);
 var rand = rng(seed);
 
 var balls = [];
+var color = '#FFFFFF';
+
 var colors = [
   '#7FDBFF', '#0074D9', '#01FF70', '#001F3F', '#39CCCC',
   '#3D9970', '#2ECC40', '#FF4136', '#85144B', '#FF851B',
   '#B10DC9', '#FFDC00', '#F012BE',
 ];
 
-for (var i = 0; i < 50; i++) {
+for (var i = 0; i < 5; i++) {
   balls.push({
-    x: rand.int(canvas.width),
-    y: rand.int(canvas.height / 2),
-    radius: rand.range(5, 15),
-    dx: rand.range(-100, 100),
-    dy: -10,
-    color: rand.pick(colors)
+    x: rand.range(cvUnitSizeH, cvUnitSizeH * (unitCount - 1)),
+    y: rand.range(cvUnitSizeV, cvUnitSizeV * (unitCount - 1)),
+    radius: 5,
+    dx: 0,
+    dy: 0,
+    color: color
   });
 }
 
@@ -31,16 +37,16 @@ raf.start(function(elapsed) {
 
   // Update each balls
   balls.forEach(function(ball) {
-    // Gravity
-    ball.dy += elapsed * 1500;
+  //   // Gravity
+  //   ball.dy += elapsed * 1500;
 
-    // Handle collision against the canvas's edges
-    if (ball.x - ball.radius < 0 && ball.dx < 0 || ball.x + ball.radius > canvas.width && ball.dx > 0) ball.dx = -ball.dx * 0.7;
-    if (ball.y - ball.radius < 0 && ball.dy < 0 || ball.y + ball.radius > canvas.height && ball.dy > 0) ball.dy = -ball.dy * 0.7;
+  //   // Handle collision against the canvas's edges
+  //   if (ball.x - ball.radius < 0 && ball.dx < 0 || ball.x + ball.radius > canvas.width && ball.dx > 0) ball.dx = -ball.dx * 0.7;
+  //   if (ball.y - ball.radius < 0 && ball.dy < 0 || ball.y + ball.radius > canvas.height && ball.dy > 0) ball.dy = -ball.dy * 0.7;
 
-    // Update ball position
-    ball.x += ball.dx * elapsed;
-    ball.y += ball.dy * elapsed;
+  //   // Update ball position
+  //   ball.x += ball.dx * elapsed;
+  //   ball.y += ball.dy * elapsed;
 
     // Render the ball
     ctx.beginPath();
